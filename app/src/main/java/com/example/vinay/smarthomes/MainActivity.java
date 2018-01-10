@@ -59,13 +59,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         EditText ed = (EditText) findViewById(R.id.editText);
         // Check the Request code
-        if (requestCode ==  REQ_SPEECH_RESULT) {
-            Log.d(TAG, "Request speech result..");
-            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String command = results.get(0);
-            ed.setText(command, TextView.BufferType.EDITABLE);
-            Log.d(TAG, "Current command ["+command+"]");
-            // Now we send commands to the IoT device
+        try
+        {
+            if (requestCode ==  REQ_SPEECH_RESULT) {
+                Log.d(TAG, "Request speech result..");
+                ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String command = results.get(0);
+                ed.setText(command, TextView.BufferType.EDITABLE);
+                Log.d(TAG, "Current command [" + command + "]");
+                // Now we send commands to the IoT device
+            }
+        }
+        catch(Exception e)
+        {
+            Log.e(TAG, "Null pointer Exception");
         }
 
     }
