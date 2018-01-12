@@ -37,6 +37,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button btn1 = (Button) findViewById(R.id.controls);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    // Start RoomsActivity.class
+                    Intent myIntent = new Intent(MainActivity.this, RoomsActivity.class);
+                    startActivity(myIntent);
+                }
+                catch(Exception e)
+                {
+                    Snackbar.make(v, "Rooms Page is unavailable", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void startVoiceCommand() {
@@ -65,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Request speech result..");
                 ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 String command = results.get(0);
+                // Set the text to EditText field for testing and debugging purposes
                 ed.setText(command, TextView.BufferType.EDITABLE);
                 Log.d(TAG, "Current command [" + command + "]");
                 // Now we send commands to the IoT device
