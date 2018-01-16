@@ -25,6 +25,24 @@
         <activity android:name=".RoomsActivity">
         </activity>
 
+        <activity android:name=".BathroomActivity">
+        </activity>
+
+        <activity android:name=".BedroomActivity">
+        </activity>
+
+        <activity android:name=".DiningroomActivity">
+        </activity>
+
+        <activity android:name=".GuestroomActivity">
+        </activity>
+
+        <activity android:name=".HallActivity">
+        </activity>
+
+        <activity android:name=".KitchenActivity">
+        </activity>
+
     </application>
 
 </manifest>
