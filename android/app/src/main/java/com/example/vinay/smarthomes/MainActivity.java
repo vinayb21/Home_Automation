@@ -1,6 +1,7 @@
 package com.example.vinay.smarthomes;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.speech.RecognizerIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        new getURLData().execute("http://192.168.1.8:3000/name?firstname=abd&lastname=abd");
     }
 
     private void startVoiceCommand() {
@@ -82,8 +99,37 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Request speech result..");
                 ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 String command = results.get(0);
+                String ans="",device="";
+                String[] words = command.trim().split("\\s+");
+                Arrays.sort(words);
+                if(Arrays.binarySearch(words, "switch")>=0 ||Arrays.binarySearch(words, "turn")>=0)
+                {
+                    if(Arrays.binarySearch(words, "on")>=0)
+                    {
+                        ans = "Turn on the ";
+                        if(Arrays.binarySearch(words, "light")>=0)
+                            device = "light";
+                        else if(Arrays.binarySearch(words, "fan")>=0)
+                            device = "fan";
+                        else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
+                            device = "air-conditioner";
+                    }
+                    else if(Arrays.binarySearch(words, "off")>=0)
+                    {
+                        ans = "Turn off the light";
+                        if(Arrays.binarySearch(words, "light")>=0)
+                            device = "light";
+                        else if(Arrays.binarySearch(words, "fan")>=0)
+                            device = "fan";
+                        else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
+                            device = "air-conditioner";
+                    }
+                }
+                ans = ans + device;
+                if(ans.equals(""))
+                    ans = "Invalid command. Please try again!";
                 // Set the text to EditText field for testing and debugging purposes
-                ed.setText(command, TextView.BufferType.EDITABLE);
+                ed.setText(ans, TextView.BufferType.EDITABLE);
                 Log.d(TAG, "Current command [" + command + "]");
                 // Now we send commands to the IoT device
             }
@@ -95,4 +141,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Sample class to create connection and to log
+    public class getURLData extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            String line="";
+            String finalJSON="";
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+
+                finalJSON = buffer.toString();
+                if(finalJSON!=null)
+                    Log.e(TAG, finalJSON);
+                Log.e(TAG, connection.getResponseCode()+"");
+                return finalJSON;
+                //return buffer.toString();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+
+                if (connection != null) {
+                    Log.e(TAG, "Connection established");
+                    //Log.e(TAG, finalJSON.toString());
+                    connection.disconnect();
+                }
+                else
+                {
+                    Log.e(TAG,"Connection not established");
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if(result==null)
+                Log.e(TAG, "No result obtained from API");
+            else
+                Log.e(TAG, result);
+        }
+    }
 }

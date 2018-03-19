@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RoomsActivity extends AppCompatActivity {
 
-    String[] rooms = {"Hall", "Bedroom", "Kitchen", "Dining Room", "Guestroom", "Bathroom"};
+    String[] rooms = {"Hall", "Bedroom", "Kitchen", "Dining Room", "Guestroom", "Bathroom","Test"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,10 @@ public class RoomsActivity extends AppCompatActivity {
                     case 5:
                         Intent newActivity5 = new Intent(RoomsActivity.this, BathroomActivity.class);
                         startActivity(newActivity5);
+                        break;
+                    case 6:
+                        Intent newActivity6 = new Intent(RoomsActivity.this, TestActivity.class);
+                        startActivity(newActivity6);
                         break;
                 }
             }

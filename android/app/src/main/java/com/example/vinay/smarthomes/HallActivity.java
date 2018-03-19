@@ -20,10 +20,10 @@ import java.util.List;
 
 public class HallActivity extends AppCompatActivity
 {
-    String[] devices = {"Light", "Fan", "A.C.", "Television", "Curtains"};
+    String[] devices = {"Light", "Fan", "A.C."};
 
     // Array of booleans to store toggle button status
-    public boolean[] status = {false,false,false,false,false};
+    public boolean[] status = {false,false,false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,12 @@ public class HallActivity extends AppCompatActivity
                 }
                 else
                 {
+                    if(position==0)
+                        new DeviceController().execute("http://192.168.1.8:3000/device/light");
+                    else if(position==1)
+                        new DeviceController().execute("http://192.168.1.8:3000/device/fan");
+                    else if(position==2)
+                        new DeviceController().execute("http://192.168.1.8:3000/device/coolingDevice");
                     tgl.setChecked(true);
                     strStatus = "On";
                     status[position]=true;
