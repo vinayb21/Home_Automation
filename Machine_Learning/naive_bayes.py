@@ -9,7 +9,7 @@ def loadCsv(filename):
 		dataset[i] = [x for x in dataset[i]]
 	return dataset
 
-filename = 'day0_data.csv'
+filename = 'sampleData.csv'
 training_dataset = loadCsv(filename)
 training_dataset = training_dataset[1:]
 training_dataset = np.array(training_dataset)
@@ -22,6 +22,7 @@ training_dataset = training_dataset[:,0:6]
 
 nb = MultinomialNB()
 x = np.array(training_dataset).astype(int)
-y = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1])
+#y = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1])
+print(training_predict)
 nb.fit(x, y)
-print(nb.predict([x[0]]))
+#print(nb.predict([x[0]]))
