@@ -1,5 +1,6 @@
 import csv 
 import numpy as np
+from numpy import array
 from sklearn.naive_bayes import MultinomialNB
 
 def loadCsv(filename):
@@ -22,7 +23,8 @@ training_dataset = training_dataset[:,0:6]
 
 nb = MultinomialNB()
 x = np.array(training_dataset).astype(int)
-#y = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1])
-print(training_predict)
+y = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1])
+y = array(y)
+#print(y)
 nb.fit(x, y)
-#print(nb.predict([x[0]]))
+print(nb.predict([x[0]]))
