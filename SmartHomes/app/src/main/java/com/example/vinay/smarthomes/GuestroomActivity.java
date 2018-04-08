@@ -1,7 +1,9 @@
 package com.example.vinay.smarthomes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,7 +23,7 @@ import java.util.List;
 public class GuestroomActivity extends AppCompatActivity
 {
     String[] devices = {"Light", "Fan", "A.C."};
-
+    String TAG = "GuestroomActivity";
     // Array of booleans to store toggle button status
     public boolean[] status = {false,false,false};
 
@@ -57,8 +59,8 @@ public class GuestroomActivity extends AppCompatActivity
                 if(tgl.isChecked())
                 {
                     int roomId = 5;
-                    String path = "http://192.168.1.4:3010/off";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
+                    String path = IP.ip;
+                    new DeviceController().execute(path+"off?room="+roomId+"&&deviceId="+(position+1));
                     tgl.setChecked(false);
                     strStatus = "Off";
                     status[position]=false;
@@ -66,11 +68,24 @@ public class GuestroomActivity extends AppCompatActivity
                 else
                 {
                     int roomId = 5;
-                    String path = "http://192.168.1.4:3010/on";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
-                    tgl.setChecked(true);
-                    strStatus = "On";
-                    status[position]=true;
+                    if(position==1)
+                    {
+                        Intent newActivity = new Intent(GuestroomActivity.this, FanControlActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("room","5");
+                        newActivity.putExtras(bundle);
+                        startActivity(newActivity);
+                    }
+                    else
+                    {
+                        String path = IP.ip;
+                        path = path + "on?room=" + roomId + "&&deviceId=" + (position + 1);
+                        new DeviceController().execute(path);
+                        Log.e(TAG, path);
+                        tgl.setChecked(true);
+                        strStatus = "On";
+                        status[position] = true;
+                    }
                 }
                 Toast.makeText(getBaseContext(), (String) hm.get("txt") + " : " + strStatus, Toast.LENGTH_SHORT).show();
             }

@@ -107,22 +107,142 @@ public class MainActivity extends AppCompatActivity {
                     if(Arrays.binarySearch(words, "on")>=0)
                     {
                         ans = "Turn on the ";
-                        if(Arrays.binarySearch(words, "light")>=0)
+                        if(Arrays.binarySearch(words, "light")>=0) {
+
                             device = "light";
-                        else if(Arrays.binarySearch(words, "fan")>=0)
+                            String path = IP.ip;
+                            if(Arrays.binarySearch(words, "hall")>=0)
+                            {
+                                path = path+"on?room=1&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bedroom")>=0)
+                            {
+                                path = path+"on?room=2&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "kitchen")>=0)
+                            {
+                                path = path+"on?room=3&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"on?room=4&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"on?room=5&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bathroom")>=0)
+                            {
+                                path = path+"on?room=6&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                        }
+                        else if(Arrays.binarySearch(words, "fan")>=0) {
                             device = "fan";
+                            String path = IP.ip;
+                            if(Arrays.binarySearch(words, "hall")>=0)
+                            {
+                                path = path+"on?room=1&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bedroom")>=0)
+                            {
+                                path = path+"on?room=2&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "kitchen")>=0)
+                            {
+                                path = path+"on?room=3&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"on?room=4&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"on?room=5&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                        }
                         else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
                             device = "air-conditioner";
                     }
                     else if(Arrays.binarySearch(words, "off")>=0)
                     {
-                        ans = "Turn off the light";
-                        if(Arrays.binarySearch(words, "light")>=0)
+                        ans = "Turn off the ";
+                        if(Arrays.binarySearch(words, "light")>=0) {
                             device = "light";
+                            String path = IP.ip;
+                            if(Arrays.binarySearch(words, "hall")>=0)
+                            {
+                                path = path+"off?room=1&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bedroom")>=0)
+                            {
+                                path = path+"off?room=2&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "kitchen")>=0)
+                            {
+                                path = path+"off?room=3&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"off?room=4&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"off?room=5&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bathroom")>=0)
+                            {
+                                path = path+"off?room=6&&deviceId=1";
+                                new DeviceController().execute(path);
+                            }
+                        }
                         else if(Arrays.binarySearch(words, "fan")>=0)
+                        {
                             device = "fan";
-                        else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
-                            device = "air-conditioner";
+                            String path = IP.ip;
+                            if(Arrays.binarySearch(words, "hall")>=0)
+                            {
+                                path = path+"off?room=1&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "bedroom")>=0)
+                            {
+                                path = path+"off?room=2&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "kitchen")>=0)
+                            {
+                                path = path+"off?room=3&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"off?room=4&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                            else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
+                            {
+                                path = path+"off?room=5&&deviceId=2";
+                                new DeviceController().execute(path);
+                            }
+                        }
+                        /*else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
+                            device = "air-conditioner";*/
                     }
                 }
                 ans = ans + device;
@@ -140,70 +260,4 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-    /*public class getURLData extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-            String line="";
-            String finalJSON="";
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-
-
-                InputStream stream = connection.getInputStream();
-
-                reader = new BufferedReader(new InputStreamReader(stream));
-
-                StringBuffer buffer = new StringBuffer();
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-
-                finalJSON = buffer.toString();
-                if(finalJSON!=null)
-                    Log.e(TAG, finalJSON);
-                Log.e(TAG, connection.getResponseCode()+"");
-                return finalJSON;
-                //return buffer.toString();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-
-                if (connection != null) {
-                    Log.e(TAG, "Connection established");
-                    //Log.e(TAG, finalJSON.toString());
-                    connection.disconnect();
-                }
-                else
-                {
-                    Log.e(TAG,"Connection not established");
-                }
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if(result==null)
-                Log.e(TAG, "No result obtained from API");
-            else
-                Log.e(TAG, result);
-        }
-    }*/
 }

@@ -46,6 +46,9 @@
         <activity android:name=".KitchenActivity">
         </activity>
 
+        <activity android:name=".FanControlActivity">
+        </activity>
+
     </application>
 
 </manifest>

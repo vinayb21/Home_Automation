@@ -1,7 +1,9 @@
 package com.example.vinay.smarthomes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,6 +23,8 @@ import java.util.List;
 public class HallActivity extends AppCompatActivity
 {
     String[] devices = {"Light", "Fan", "A.C."};
+
+    String TAG = "HallActivity";
 
     // Array of booleans to store toggle button status
     public boolean[] status = {false,false,false};
@@ -57,8 +61,10 @@ public class HallActivity extends AppCompatActivity
                 if(tgl.isChecked())
                 {
                     int roomId = 1;
-                    String path = "http://192.168.1.4:3010/off";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
+                    String path = IP.ip;
+                    path = path+"off?room="+roomId+"&&deviceId="+(position+1);
+                    new DeviceController().execute(path);
+                    Log.e(TAG, path);
                     tgl.setChecked(false);
                     strStatus = "Off";
                     status[position]=false;
@@ -66,17 +72,27 @@ public class HallActivity extends AppCompatActivity
                 else
                 {
                     int roomId = 1;
-                    String path = "http://192.168.1.4:3010/on";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
-                    /*if(position==0)
-                        new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
-                    else if(position==1)
-                        new DeviceController().execute("http://192.168.1.4:3010/practise/fan");
-                    else if(position==2)
-                        new DeviceController().execute("http://192.168.1.4:3010/practise/coolingDevice");*/
-                    tgl.setChecked(true);
-                    strStatus = "On";
-                    status[position]=true;
+                    if(position==1)
+                    {
+                        tgl.setChecked(true);
+                        strStatus = "On";
+                        status[position] = true;
+                        Intent newActivity = new Intent(HallActivity.this, FanControlActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("room","1");
+                        newActivity.putExtras(bundle);
+                        startActivity(newActivity);
+                    }
+                    else
+                    {
+                        String path = IP.ip;
+                        path = path + "on?room=" + roomId + "&&deviceId=" + (position + 1);
+                        new DeviceController().execute(path);
+                        Log.e(TAG, path);
+                        tgl.setChecked(true);
+                        strStatus = "On";
+                        status[position] = true;
+                    }
                 }
                 Toast.makeText(getBaseContext(), (String) hm.get("txt") + " : " + strStatus, Toast.LENGTH_SHORT).show();
             }
@@ -95,7 +111,7 @@ public class HallActivity extends AppCompatActivity
         }
 
         // Keys used in Hashmap
-        String[] from = {"txt","stat" };
+        String[] from = {"txt","stat"};
 
         // Ids of views in listview_layout
         int[] to = { R.id.device_item, R.id.tgl_status};

@@ -57,8 +57,8 @@ public class BathroomActivity extends AppCompatActivity
                 if(tgl.isChecked())
                 {
                     int roomId = 6;
-                    String path = "http://192.168.1.4:3010/off";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
+                    String path = IP.ip;
+                    new DeviceController().execute(path+"off?room="+roomId+"&&deviceId="+(position+1));
                     tgl.setChecked(false);
                     strStatus = "Off";
                     status[position]=false;
@@ -66,8 +66,8 @@ public class BathroomActivity extends AppCompatActivity
                 else
                 {
                     int roomId = 6;
-                    String path = "http://192.168.1.4:3010/on";
-                    new DeviceController().execute(path+"?room="+roomId+"&&deviceId="+position);
+                    String path = IP.ip;
+                    new DeviceController().execute(path+"on?room="+roomId+"&&deviceId="+(position+1));
                     tgl.setChecked(true);
                     strStatus = "On";
                     status[position]=true;
