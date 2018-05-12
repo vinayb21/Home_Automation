@@ -145,31 +145,61 @@ public class MainActivity extends AppCompatActivity {
                         else if(Arrays.binarySearch(words, "fan")>=0) {
                             device = "fan";
                             String path = IP.ip;
+                            int room = 1;
+                            int speed = 3;
                             if(Arrays.binarySearch(words, "hall")>=0)
                             {
-                                path = path+"on?room=1&&deviceId=2";
-                                new DeviceController().execute(path);
+                                room = 1;
+                                Log.e(TAG, "Hall");
                             }
                             else if(Arrays.binarySearch(words, "bedroom")>=0)
                             {
-                                path = path+"on?room=2&&deviceId=2";
-                                new DeviceController().execute(path);
+                                room = 2;
+                                Log.e(TAG, "Bedroom");
                             }
                             else if(Arrays.binarySearch(words, "kitchen")>=0)
                             {
-                                path = path+"on?room=3&&deviceId=2";
-                                new DeviceController().execute(path);
+                                room = 3;
+                                Log.e(TAG, "Kitchen");
                             }
                             else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
                             {
-                                path = path+"on?room=4&&deviceId=2";
-                                new DeviceController().execute(path);
+                                room = 4;
+                                Log.e(TAG, "Dining room");
                             }
                             else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
                             {
-                                path = path+"on?room=5&&deviceId=2";
-                                new DeviceController().execute(path);
+                                room = 5;
+                                Log.e(TAG, "Guestroom");
                             }
+
+                            if(Arrays.binarySearch(words, "one")>=0)
+                            {
+                                speed = 1;
+                                Log.e(TAG, "Speed: 1");
+                            }
+                            else if(Arrays.binarySearch(words, "two")>=0)
+                            {
+                                speed = 2;
+                                Log.e(TAG, "Speed: 2");
+                            }
+                            else if(Arrays.binarySearch(words, "three")>=0)
+                            {
+                                speed = 3;
+                                Log.e(TAG, "Speed: 3");
+                            }
+                            else if(Arrays.binarySearch(words, "four")>=0)
+                            {
+                                speed = 4;
+                                Log.e(TAG, "Speed: 4");
+                            }
+                            else if(Arrays.binarySearch(words, "five")>=0)
+                            {
+                                speed = 5;
+                                Log.e(TAG, "Speed: 5");
+                            }
+                            path = path + "fan?room="+room+"&&deviceId=2&&speed="+speed;
+                            new DeviceController().execute(path);
                         }
                         else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
                             device = "air-conditioner";
@@ -214,32 +244,6 @@ public class MainActivity extends AppCompatActivity {
                         else if(Arrays.binarySearch(words, "fan")>=0)
                         {
                             device = "fan";
-                            String path = IP.ip;
-                            if(Arrays.binarySearch(words, "hall")>=0)
-                            {
-                                path = path+"off?room=1&&deviceId=2";
-                                new DeviceController().execute(path);
-                            }
-                            else if(Arrays.binarySearch(words, "bedroom")>=0)
-                            {
-                                path = path+"off?room=2&&deviceId=2";
-                                new DeviceController().execute(path);
-                            }
-                            else if(Arrays.binarySearch(words, "kitchen")>=0)
-                            {
-                                path = path+"off?room=3&&deviceId=2";
-                                new DeviceController().execute(path);
-                            }
-                            else if(Arrays.binarySearch(words, "diningroom")>=0 || Arrays.binarySearch(words, "dining")>=0 && Arrays.binarySearch(words, "room")>=0)
-                            {
-                                path = path+"off?room=4&&deviceId=2";
-                                new DeviceController().execute(path);
-                            }
-                            else if(Arrays.binarySearch(words, "guestroom")>=0 || Arrays.binarySearch(words, "guest")>=0 && Arrays.binarySearch(words, "room")>=0)
-                            {
-                                path = path+"off?room=5&&deviceId=2";
-                                new DeviceController().execute(path);
-                            }
                         }
                         /*else if(Arrays.binarySearch(words, "AC")>=0 || Arrays.binarySearch(words, "ac")>=0 || Arrays.binarySearch(words, "air conditioner")>=0)
                             device = "air-conditioner";*/

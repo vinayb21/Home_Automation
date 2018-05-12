@@ -1,0 +1,483 @@
+﻿SENSOR
+
+LDR
+
+import RPi.GPIO as GPIO
+import RPi.GPIO as IO #Import GPIO library
+import time                                       #Import time library
+GPIO.setmode(GPIO.BOARD)                          #Set GPIO pin numbering
+ldr = 19
+led = 11                                         #Associate pin 26 to pir
+GPIO.setup(ldr, GPIO.IN)
+GPIO.setup(led, GPIO.OUT)#Set pin as GPIO in 
+print ("Waiting for sensor to settle")
+time.sleep(2)                                     #Waiting 2 seconds for the sensor to initiate
+print ("Detecting motion")
+count = 0
+while (count<1):
+   if GPIO.input(ldr):                            #Check whether pir is HIGH
+      print ("andheraaaaa")
+      time.sleep(2)                              #D1- Delay to avoid multiple detection
+      count=1
+      GPIO.output(led,1)
+      time.sleep(5)
+      GPIO.output(led,0)
+      GPIO.cleanup()
+   else:
+   #   print("Not detected")
+      time.sleep(2)                              #D1- Delay to avoid multiple detection
+GPIO.cleanup()
+   #time.sleep(0.1)                               #While loop delay should be less than detection(hardware) delay
+   
+
+PIR
+
+
+import RPi.GPIO as GPIO
+import RPi.GPIO as IO #Import GPIO library
+import time                                       #Import time library
+GPIO.setmode(GPIO.BOARD)                          #Set GPIO pin numbering
+pir = 19
+#led = 15                                         #Associate pin 26 to pir
+GPIO.setup(pir, GPIO.IN)
+#GPIO.setup(led, GPIO.OUT)#Set pin as GPIO in 
+#print ("Waiting for sensor to settle")
+time.sleep(2)                                     #Waiting 2 seconds for the sensor to initiate
+#print ("Detecting motion")
+count = 0
+while (count<1):
+   if GPIO.input(pir):                            #Check whether pir is HIGH
+      print ("Motion Detected!")
+      time.sleep(2)                              #D1- Delay to avoid multiple detection
+      count=1
+     # GPIO.output(led,1)
+      #time.sleep(5)
+      #GPIO.output(led,0)
+      #GPIO.cleanup()
+   else:
+   #   print("Not detected")
+      time.sleep(2)                              #D1- Delay to avoid multiple detection
+GPIO.cleanup()
+   #time.sleep(0.1)                               #While loop delay should be less than detection(hardware) delay
+   
+
+
+TEMPERATURE HUMIDITY
+
+
+import sys
+import Adafruit_DHT
+import time
+
+while True:
+
+    humidity, temperature = Adafruit_DHT.read_retry(11, 23)
+    temperature=format(temperature, '.1f')
+    humidity=format(humidity, '.1f')
+
+    print(temperature)
+    print(humidity)
+
+    #print("Temp: {0:0.1f} C  Humidity: {1:0.1f} %".format(temperature, humidity))
+    time.sleep(1)
+
+
+ROW ADD CSV
+
+# importing the csv module
+import csv
+import datetime
+import RPi.GPIO as GPIO
+import RPi.GPIO as IO #Import GPIO library
+import time
+import sys
+import Adafruit_DHT
+import time
+
+x=0
+# temp humid sensor code
+while (x<10):
+
+    humidity, temperature = Adafruit_DHT.read_retry(11, 11)
+    temperature=format(temperature, '.1f')
+    humidity=format(humidity, '.1f')
+# pir sensor code
+    GPIO.setmode(GPIO.BOARD)                          #Set GPIO pin numbering
+    pir = 21
+    #led = 13                                          #Associate pin 26 to pir
+    GPIO.setup(pir, GPIO.IN)
+    #GPIO.setup(led, GPIO.OUT)#Set pin as GPIO in 
+    #print ("Waiting for sensor to settle")
+    #time.sleep(2)                                     #Waiting 2 seconds for the sensor to initiate
+    #print ("Detecting motion")
+    p = 0
+    count = 0
+    if GPIO.input(pir):                            #Check whether pir is HIGH
+        print ("Motion Detected!")
+    #        time.sleep(2)                              #D1- Delay to avoid multiple detection
+        count=1
+        GPIO.output(led,1)
+        time.sleep(1)
+        GPIO.output(led,0)
+      #GPIO.cleanup()
+    else:
+        print("Not detected")
+        time.sleep(1)                              #D1- Delay to avoid multiple detection
+    GPIO.cleanup()
+   #time.sleep(0.1)                               #While loop delay should be less than detection(hardware) delay
+#LDR 
+    ldr = 19
+    #led = 15                                         #Associate pin 26 to pir
+    GPIO.setup(ldr, GPIO.IN)
+    #GPIO.setup(led, GPIO.OUT)#Set pin as GPIO in 
+    #print ("Waiting for sensor to settle")
+    time.sleep(2)                                     #Waiting 2 seconds for the sensor to initiate
+    #print ("Detecting motion")
+    illuminance = 0
+    if GPIO.input(ldr):                            #Check whether pir is HIGH
+        print ("Andhera Detected!")
+        time.sleep(2)                              #D1- Delay to avoid multiple detection
+        illuminance=0
+      #GPIO.output(led,1)
+      #time.sleep(5)
+      #GPIO.output(led,0)
+      #GPIO.cleanup()
+    else:
+    #print("Not detected")
+        illuminance=1
+        print ("Ujalaa Detected!")
+        time.sleep(2)                              #D1- Delay to avoid multiple detection
+    
+    GPIO.cleanup()
+    #time.sleep(0.1)                               #While loop delay should be less than detection(hardware) delay   
+    #LightState
+    #lightState=select1.py()
+#ADD TO CSV
+    now = datetime.datetime.now()
+    weekday = datetime.datetime.today()
+    print(now.year, now.month, now.day, now.hour, now.minute, now.second,weekday.weekday())
+    #field names
+    #fields = ['Name', 'Branch', 'Year', 'CGPA']
+    humanDetect=count
+    # data rows of csv file
+    rows = [[now.hour,now.minute,now.second,now.day,weekday.weekday(),now.month,illuminance,temperature,humanDetect,fan,lightState]]
+    #name of csv file
+    filename = "newDAY.csv"
+    # writing to csv file
+    with open(filename, 'a') as csvfile:
+    # creating a csv writer object
+        csvwriter = csv.writer(csvfile)
+        # writing the fields
+        #csvwriter.writerow(fields)
+        #writing the data rows
+        csvwriter.writerows(rows)
+        print("inserted")
+    x=x+1
+
+
+
+
+DEVICES
+
+
+LIGHT
+
+import RPi.GPIO as GPIO
+import RPi.GPIO as IO #Import GPIO library
+import time
+import sys #Import time library
+#from furl import furl
+#import mysql.connector
+GPIO.setmode(GPIO.BOARD)                          #Set GPIO pin numbering
+#roomID=sys.argv[1]
+room = sys.argv[1]
+deviceId = sys.argv[2]
+pir = 11
+if(sys.argv[1]=="1" and sys.argv[2]=="1"):
+    pir = 11                                        #Associate pin 26 to pir
+    
+elif(sys.argv[1]=="2" and sys.argv[2]=="1"):
+    pir = 13                                        #Associate pin 26 to pir
+ 
+elif(sys.argv[1]=="3" and sys.argv[2]=="1"):
+    pir = 15                                        #Associate pin 26 to pir
+
+elif(sys.argv[1]=="4" and sys.argv[2]=="1"):
+    pir = 29                                        #Associate pin 26 to pir
+
+elif(sys.argv[1]=="5" and sys.argv[2]=="1"):
+    pir = 31                                        #Associate pin 26 to pir
+
+elif(sys.argv[1]=="6" and sys.argv[2]=="1"):
+    pir = 33                                        #Associate pin 26 to pir
+GPIO.setup(pir, GPIO.OUT)                          #Set pin as GPIO in
+GPIO.output(pir,1)
+print("on")
+
+
+
+FAN
+
+import RPi.GPIO as GPIO
+import time
+import sys
+GPIO.setmode(GPIO.BOARD)
+ 
+# Setup GPIO Pins
+#GPIO.setup(12, GPIO.OUT)
+#GPIO.setup(32, GPIO.OUT)
+
+GPIO.setup(33, GPIO.OUT)
+#GPIO.setup(35, GPIO.OUT)
+ 
+# Set PWM instance and their frequency
+#pwm12 = GPIO.PWM(12, 0.5)
+#wm32 = GPIO.PWM(32, 0.75)
+pwm33 = GPIO.PWM(33, 10)
+#pwm35 = GPIO.PWM(35, 0.87)
+ 
+# Start PWM with 50% Duty Cycle
+#pwm12.start(50)
+#pwm32.start(50)
+
+
+pwm33.start(60)
+
+if(sys.argv[1]=="1" and sys.argv[2]=="2" and sys.argv[3]=="1"):
+    pwm33.start(50)
+    time.sleep(5) 
+    pwm33.stop()
+#pwm35.start(50)
+    
+elif(sys.argv[1]=="1" and sys.argv[2]=="2" and sys.argv[3]=="2"):
+    pwm33.start(60)
+    time.sleep(5) 
+    pwm33.stop()
+    
+    
+elif(sys.argv[1]=="1" and sys.argv[2]=="2" and sys.argv[3]=="3"):
+    pwm33.start(70)
+    time.sleep(5) 
+    pwm33.stop()
+    
+    
+elif(sys.argv[1]=="1" and sys.argv[2]=="2" and sys.argv[3]=="4"):
+    pwm33.start(85)
+    time.sleep(5) 
+    pwm33.stop()
+    
+    
+elif(sys.argv[1]=="1" and sys.argv[2]=="2" and sys.argv[3]=="5"):
+    pwm33.start(100)
+    time.sleep(5) 
+    pwm33.stop()
+ 
+#raw_input('Press return to stop:')	#Wait
+#time.sleep(5) 
+# Stops the PWM
+#pwm12.stop()
+#pwm32.stop()
+pwm33.stop()
+#pwm35.stop()
+print("chala")
+# Cleans the GPIO
+#GPIO.cleanup()
+
+
+
+SERVER
+
+start.js
+
+var express = require('express');
+var app = express();
+ 
+// Creates a server which runs on port 3000 and 
+// can be accessed through localhost:3000
+app.listen(3010, function() {
+	console.log('server running on port 3010');
+} )
+ 
+// Function callName() is executed whenever 
+// url is of the form localhost:3000/name
+app.get('/name', callName);
+app.get('/',startSensing)
+app.get('/light', lightFunction);
+app.get('/fan', fanFunction);
+app.get('/temperatureSensor', temperatureSensorFunction);
+app.get('/lightSensor', lightSensorFunction);
+app.get('/humanDetectionSensor', humanDetectionSensorFunction);
+app.get('/coolingDevice', coolingDeviceFunction);
+app.get('/connection', connectionFunction);
+app.get('/on', onFunction);
+app.get('/off', offFunction);
+
+function connectionFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('js',["./query/conn.js"] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+function startSensing(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('js',["./practise/sense.js"] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+ 
+function callName(req, res) {
+     
+	// Use child_process.spawn method from 
+    	// child_process module and assign it
+    	// to variable spawn
+    	var spawn = require("child_process").spawn;
+     
+    	// Parameters passed in spawn -
+    	// 1. type_of_script
+    	// 2. list containing Path of the script
+    	//    and arguments for the script 
+     
+    	// E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
+    	// so, first name = Mike and last name = Will
+    	var process = spawn('python',["./practise/hello.py",
+                            req.query.firstname,
+                            req.query.lastname] );
+ 
+    	// Takes stdout data from script which executed
+    	// with arguments and send this data to res object
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+function lightFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/light.py"] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+		res.send(data.toString());
+		res.send(data.toString());
+		res.send(data.toString());
+		res.send(data.toString());
+		res.send(data.toString());
+    	})
+}
+
+function onFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/ON1.py",req.query.room,
+                            req.query.deviceId] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+		
+    	})
+}
+
+function offFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/off.py",req.query.room,
+                            req.query.deviceId] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+
+function fanFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/Motor3.py",
+                            req.query.room,
+                            req.query.deviceId,
+			    req.query.speed]);
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+function temperatureSensorFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./sensor/temperatureSensor.py",
+                            req.query.firstname,
+                            req.query.lastname] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+function lightSensorFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./sensor/lightSensor.py",
+                            req.query.firstname,
+                            req.query.lastname] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+function humanDetectionSensorFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/pir.py"] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+function coolingDeviceFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./device/coolingDevice.py",
+                            req.query.firstname,
+                            req.query.lastname] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+
+
+
+
+SERVER 2
+
+sensorServer.js
+
+var express = require('express');
+var app = express();
+ 
+// Creates a server which runs on port 3000 and 
+// can be accessed through localhost:3000
+app.listen(3020, function() {
+	console.log('server running on port 3020');
+} )
+ 
+// Function callName() is executed whenever 
+// url is of the form localhost:3000/name
+app.get('/sensor', sensorDataFunction);
+
+function sensorDataFunction(req, res) {
+     
+    	var spawn = require("child_process").spawn;
+    	var process = spawn('python',["./practise/RowAddCSV.py"] );
+    	process.stdout.on('data', function(data) {
+        	res.send(data.toString());
+    	})
+}
+

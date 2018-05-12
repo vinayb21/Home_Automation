@@ -14,8 +14,8 @@ filename = 'data.csv'
 training_dataset = loadCsv(filename)
 training_dataset = training_dataset[1:745]
 training_dataset = np.array(training_dataset)
-training_predict_fan = training_dataset[:,9:10]
-training_predict_light = training_dataset[:,10:11]
+training_predict_light = training_dataset[:,9:10]
+training_predict_fan = training_dataset[:,10:11]
 training_dataset = training_dataset[:,0:9]
 #print(filename)
 #print(training_dataset)
@@ -35,5 +35,6 @@ y2 = y2.ravel()
 #print(y)
 nb.fit(x, y1)
 nb1.fit(x, y2)
+print(x[0])
 print(nb.predict([x[0]]))
 print(nb.predict([x[0]]))
